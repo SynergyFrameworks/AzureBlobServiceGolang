@@ -56,29 +56,27 @@ The application uses a YAML-based configuration file (`config.yaml`) to manage s
 - **Kafka**: Brokers, consumer group, and topics.
 - **Elasticsearch**: URL for logging.
 
-## Running the Application
-
-### Prerequisites
-- **Go** installed (version 1.17+ recommended).
-- **Azure Storage Account** (optional for Azure integration).
-- **Kafka** broker (for event-driven operations).
-- **Elasticsearch** instance (optional for logging).
-
 ### Steps
 1. Clone the repository:
    ```bash
    git clone https://github.com/your-repo/AzureBlobServiceGolang.git
    cd AzureBlobServiceGolang
 
-Testing:
+## Testing and Running the Application
 
-Unit tests for storage operations:
-bash
-Copy
-Edit
-go test ./...
-Example Endpoints
-File Upload: POST /upload/:path
-Delete File: DELETE /delete/:path
-List Files: GET /files/:path
-Fetch Events: GET /events
+### Prerequisites
+
+Before running or testing the application, ensure the following are installed and configured:
+- **Go** (version 1.17+ recommended)
+- **Azure Storage Account** (if using Azure Blob Storage)
+- **Kafka** broker (if running Kafka event-driven features)
+- **Elasticsearch** (optional for logging)
+
+### Running the Application
+
+#### 1. Server
+The server handles API requests for file and directory operations.
+
+To start the server:
+```bash
+go run cmd/server/main.go
