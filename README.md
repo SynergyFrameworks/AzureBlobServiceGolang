@@ -1,64 +1,75 @@
-Azure Blob Storage Service with Kafka Integration
-Overview
-This application provides a robust storage solution with seamless integration of Azure Blob Storage and Apache Kafka. It offers APIs for file and directory operations, event-driven processing, and supports both local and cloud storage. Designed for scalability, the app processes storage-related events in real-time using Kafka consumers.
+# Azure Blob Service Golang
 
-Features
-File Operations:
+## Overview
 
-Upload, read, delete, and list files.
-Supports overwriting files and retrieving metadata.
-Directory Operations:
+The **Azure Blob Service Golang** application provides an API-driven solution for managing file storage and retrieval using either **Azure Blob Storage** or local storage as a fallback. It is designed for cloud-native applications requiring a robust and scalable file storage system.
 
-Create, delete, and list directories.
-Storage Adapters:
+## Features
 
-Azure Blob Storage: Handles cloud-based storage.
-Local Storage: Provides fallback for local file handling.
-Event-Driven Processing:
+- **File Upload**: Upload files to Azure Blob Storage or local storage with optional overwrite functionality.
+- **File Read**: Retrieve files stored in Azure Blob Storage or local storage.
+- **File Deletion**: Delete files from the storage system.
+- **Directory Operations**: Support for creating and deleting directories in local storage.
+- **Event-Driven Architecture**: Kafka integration to process and log file events, such as uploads and deletions.
+- **Elasticsearch Logging**: Log events and errors into Elasticsearch for observability and debugging.
 
-Uses Kafka for storage event handling (e.g., file uploaded, deleted).
-Publishes events to the storage-events topic.
-Elasticsearch Logging:
+## Key Components
 
-Sends logs to Elasticsearch for centralized monitoring.
-RESTful APIs:
+### 1. **Storage Adapters**
+   - **Azure Blob Storage**:
+     - Connects to Azure Blob Storage using an account name, account key, and container name.
+     - Supports file upload, read, delete, and list operations.
+   - **Local Storage**:
+     - Stores files locally on the server’s filesystem.
+     - Provides an alternative when Azure credentials are not configured.
 
-Expose endpoints via a Gin-based HTTP server.
-Architecture
-Server:
+### 2. **Kafka Integration**
+   - Kafka-based messaging for event-driven architecture.
+   - Supports publishing and consuming events for file operations.
 
-Manages REST APIs and serves client requests.
-Publishes file and directory events to Kafka.
-Worker:
+### 3. **Elasticsearch Logging**
+   - Centralized logging for monitoring system events.
+   - Sends logs to an Elasticsearch instance for analytics and debugging.
 
-Listens to Kafka topics.
-Processes events (e.g., file upload or deletion) in real-time.
-Configurable Storage:
+### 4. **REST API**
+   - Built using **Gin Web Framework**.
+   - Provides endpoints for file and directory operations.
 
-Uses Azure Blob Storage or falls back to local storage based on configuration.
-Tech Stack
-Go: Core language for implementation.
-Azure SDK for Go: Handles cloud storage operations.
-Kafka: Event-driven communication.
-Elasticsearch: Centralized logging.
-Gin: HTTP web framework for APIs.
-gopkg.in/yaml.v3: For configuration management.
-Usage
-Setup Configuration:
+## API Endpoints
 
-Update config.yaml with Azure and Kafka credentials.
-Run the Server:
+### File Operations
+- `POST /upload/:path`: Upload a file to the specified path.
+- `GET /read/:path`: Retrieve a file from the specified path.
+- `DELETE /delete/:path`: Delete a file from the specified path.
 
-bash
-Copy
-Edit
-go run cmd/server/main.go
-Run the Worker:
+### Directory Operations
+- `POST /directory/:path`: Create a directory at the specified path.
+- `DELETE /directory/:path`: Delete a directory at the specified path.
 
-bash
-Copy
-Edit
-go run cmd/worker/main.go
+### Event Operations
+- `GET /events`: Fetch recent file operation events from Kafka.
+
+## Configuration
+
+The application uses a YAML-based configuration file (`config.yaml`) to manage settings, including:
+- **Azure Storage**: `accountName`, `accountKey`, and `containerName`.
+- **Kafka**: Brokers, consumer group, and topics.
+- **Elasticsearch**: URL for logging.
+
+## Running the Application
+
+### Prerequisites
+- **Go** installed (version 1.17+ recommended).
+- **Azure Storage Account** (optional for Azure integration).
+- **Kafka** broker (for event-driven operations).
+- **Elasticsearch** instance (optional for logging).
+
+### Steps
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-repo/AzureBlobServiceGolang.git
+   cd AzureBlobServiceGolang
+
 Testing:
 
 Unit tests for storage operations:
