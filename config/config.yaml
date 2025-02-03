@@ -1,0 +1,22 @@
+server:
+  port: 8080
+  host: "localhost"
+
+azure:
+  accountName: ""  # Set via AZURE_ACCOUNT_NAME
+  accountKey: ""   # Set via AZURE_ACCOUNT_KEY
+  containerName: "" # Set via AZURE_CONTAINER_NAME
+
+kafka:
+  brokers:
+    - "localhost:9092"
+  consumerGroup: "storage-service-group"
+  topics:
+    storageEvents: "storage-events"
+  producer:
+    requiredAcks: 1  # -1=all, 1=leader, 0=none
+    compression: 2   # 0=none, 1=gzip, 2=snappy
+    retries: 3
+
+logging:  # ✅ Fixed indentation
+  elasticsearchURL: "http://localhost:9200/logs/_doc/"  
